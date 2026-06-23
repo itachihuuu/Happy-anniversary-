@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary Mama Ji & Mami Ji ❤️</title>
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLES --- */
+        :root {
+            --bg-dark: #0A0A0A;
+            --royal-gold: #FFD700;
+            --champagne-gold: #F5D78E;
+            --emerald-green: #0F8B8D;
+            --warm-ivory: #F8F4E9;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(245, 215, 142, 0.15);
+            --font-serif: 'Playfair Display', 'Georgia', serif;
+            --font-sans: 'Montserrat', 'Helvetica Neue', sans-serif;
+        }
+
+        /* --- BASE STYLES & RESET --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--warm-ivory);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--royal-gold);
+            border-radius: 4px;
+        }
+
+        /* Typography Utilities */
+        .cinematic-title {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            color: var(--champagne-gold);
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .cinematic-sub {
+            font-size: 1.1rem;
+            color: #A0A0A0;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 3rem;
+        }
+
+        /* --- GLOBAL CANVAS & BACKGROUND EFFECTS --- */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(15, 139, 141, 0.08) 0%, transparent 70%);
+            top: 20%;
+            left: -10%;
+            z-index: 1;
+            pointer-events: none;
+            filter: blur(50px);
+        }
+
+        .ambient-glow-right {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            bottom: 10%;
+            right: -10%;
+            z-index: 1;
+            pointer-events: none;
+            filter: blur(50px);
+        }
+
+        /* --- CURTAIN CALL / INTRO PRELOADER --- */
+        #intro-curtain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease, visibility 1.5s;
+            padding: 20px;
+        }
+
+        .intro-text-box {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .intro-line-1 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: #888;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 2s forwards 0.5s;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .intro-line-2, .tribute-sequence-2 {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+           background: linear-gradient(45deg, #f0cc01 0%, #F8F4E9 70% );
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           color: transparent;
+           background-clip: text;
+           
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 2s forwards 2s;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            margin-bottom: 3rem;
+        }
+
+        .luxury-btn {
+            background: transparent;
+            border: 1px solid var(--champagne-gold);
+            border-radius: 40px 10px ;
+            color: var(--champagne-gold);
+            padding: 15px 40px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInOnly 1.5s forwards 4s;
+            transition: all 0.5s ease;
+            box-shadow: 0 0 15px rgba(245, 215, 142, 0.1);
+        }
+
+        .luxury-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .luxury-btn:hover::before {
+            left: 100%;
+        }
+
+        .luxury-btn:hover {
+            background: var(--champagne-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px rgba(245, 215, 142, 0.4);
+            transform: scale(1.05);
+            border-radius: 10px 40px ;
+        }
+
+        /* --- CONTENT WRAPPER --- */
+        #main-content {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .hero-glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 60px 40px;
+            border-radius: 4px;
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 1.5s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .hero.visible .hero-glass-card {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .hero-tag {
+            font-size: 1rem;
+            letter-spacing: 6px;
+            color: var(--royal-gold);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-main-title {
+            font-family: var(--font-serif);
+            font-size: 4.5rem;
+            color: var(--warm-ivory);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-names {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            color: var(--champagne-gold);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 15px rgba(245, 215, 142, 0.2);
+        }
+
+        .hero-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #B0B0B0;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .hero-quote::before, .hero-quote::after {
+            content: '"';
+            color: var(--royal-gold);
+            font-size: 1.5rem;
+        }
+
+        /* --- LIVE COUNTER SECTION --- */
+        .counter-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .counter-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 4px;
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+        }
+
+        .counter-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--royal-gold);
+        }
+
+        .counter-num {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            color: var(--royal-gold);
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .counter-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #A0A0A0;
+        }
+
+        /* --- THE LOVE STORY TIMELINE --- */
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 40px auto 0 auto;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--glass-border) 10%, var(--glass-border) 90%, transparent);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 1s ease;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+            transform: translateX(40px);
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-pointer {
+            position: absolute;
+            left: 50%;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-dark);
+            border: 2px solid var(--royal-gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            box-shadow: 0 0 10px var(--royal-gold);
+        }
+
+        .timeline-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 4px;
+            width: 85%;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s ease;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-card {
+            margin-right: auto;
+        }
+        .timeline-item:nth-child(even) .timeline-card {
+            margin-left: auto;
+        }
+
+        .timeline-card:hover {
+            border-color: var(--royal-gold);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.05);
+        }
+
+        .timeline-icon {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--champagne-gold);
+            margin-bottom: 10px;
+        }
+
+        .timeline-desc {
+            font-size: 0.95rem;
+            color: #B0B0B0;
+            line-height: 1.6;
+        }
+
+        /* --- MEMORY GALLERY (CINEMATIC PLACEHOLDERS) --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+           background-size: cover;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 4/5;
+            background:linear-gradient(135deg, #111, #1a1a1a);
+          ;
+            border: 1px solid var(--glass-border);
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            
+        }
+
+        /* Luxury Decorative Silhouette Asset Framework */
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            border: 1px dashed rgba(245, 215, 142, 0.2);
+            opacity: 0.5;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-placeholder-art1 {
+            text-align: center;
+            z-index: 2;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background-image: url(img1.png);
+            background-size: cover;
+            background-repeat: none;
+          
+        }
+         .gallery-placeholder-art2 {
+            text-align: center;
+            z-index: 2;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background-image: url(img2.png);
+             background-size: cover;
+            background-repeat: none;
+        } 
+        .gallery-placeholder-art3 {
+            text-align: center;
+            z-index: 2;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background-image: url(img3.png);
+             background-size: cover;
+            background-repeat: none;
+        }
+        .gallery-placeholder-art4 {
+             text-align: center;
+            z-index: 2;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;           
+            background-image: url(img4.jpg);
+             background-size: cover;
+            background-repeat: none;
+        }
+
+        .gallery-placeholder-art span {
+            
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            filter: grayscale(30%);
+            transition: transform 0.6s ease;
+            width: 100%;
+            height: 100%;
+          
+    
+        }
+
+        .gallery-placeholder-art p {
+            
+            letter-spacing: 1px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            color: var(--champagne-gold);
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            text-shadow: 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.4) 50%, transparent 100%);
+            opacity: 0.8;
+            transition: opacity 0.5s ease;
+            background-size: cover;
+            background-repeat: none;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--royal-gold);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.1);
+        }
+
+        .gallery-item:hover::before {
+            transform: scale(1.08);
+            border-color: var(--royal-gold);
+        }
+
+        .gallery-item:hover .gallery-placeholder-art span {
+            transform: scale(1.2) translateY(-5px);
+        }
+
+        /* --- SPECIAL LETTER SECTION --- */
+        .letter-wrap {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #121212;
+            border: 1px solid var(--glass-border);
+            border-top: 4px solid var(--royal-gold);
+            padding: 50px 40px;
+            position: relative;
+            border-radius: 4px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        }
+
+        .letter-salutation {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--champagne-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .letter-body {
+            font-size: 1.05rem;
+            color: #D0D0D0;
+            line-height: 1.8;
+            text-align: justify;
+            min-height: 200px;
+            font-family: var(--font-serif);
+            white-space: pre-line;
+        }
+
+        .letter-signoff {
+            margin-top: 3rem;
+            text-align: right;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--royal-gold);
+            font-style: italic;
+        }
+
+        /* --- FAMILY WISHES SECTION --- */
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .wish-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            border-radius: 4px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .wish-card::after {
+            content: '“';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 5rem;
+            color: rgba(255, 215, 0, 0.05);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .wish-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--royal-gold);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .wish-text {
+            font-size: 1rem;
+            color: #D5D5D5;
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 25px;
+        }
+
+        .wish-author {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .wish-name {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            color: var(--champagne-gold);
+            font-weight: 600;
+        }
+
+        .wish-relation {
+            font-size: 0.8rem;
+            color: var(--emerald-green);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
+        }
+
+        /* --- SURPRISE CELEBRATION AREA --- */
+        .surprise-box {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            background: radial-gradient(circle at center, rgba(15, 139, 141, 0.1) 0%, transparent 70%);
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        .surprise-active-msg {
+            margin-top: 30px;
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--royal-gold);
+            text-shadow: 0 0 15px rgba(255,215,0,0.4);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .surprise-active-msg.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* --- FINAL TRIBUTE SCREEN --- */
+        .tribute-section {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-top: 1px solid rgba(255,215,0,0.05);
+        }
+
+        .tribute-sequence-1 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            color: #A0A0A0;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .tribute-sequence-2 {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            color: var(--royal-gold);
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transition: opacity 1.5s ease 0.5s;
+        }
+
+        .tribute-sequence-3 {
+            font-size: 1.15rem;
+            color: var(--warm-ivory);
+            max-width: 600px;
+            line-height: 1.8;
+            letter-spacing: 1px;
+            opacity: 0;
+            transition: opacity 1.5s ease 1s;
+        }
+
+        .tribute-section.visible .tribute-sequence-1,
+        .tribute-section.visible .tribute-sequence-2,
+        .tribute-section.visible .tribute-sequence-3 {
+            opacity: 1;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInOnly {
+            to { opacity: 1; }
+        }
+
+        /* --- RESPONSIVE ADAPTATIONS --- */
+        @media (max-width: 900px) {
+            .hero-main-title { font-size: 3rem; }
+            .hero-names { font-size: 2.2rem; }
+            .cinematic-title { font-size: 2.2rem; }
+            .counter-container { grid-template-columns: repeat(2, 1fr); }
+            .timeline-container::before { left: 30px; }
+            .timeline-item { padding-right: 0; padding-left: 60px; width: 100%; transform: translateX(30px) !important; }
+            .timeline-item:nth-child(even) { padding-left: 60px; }
+            .timeline-pointer { left: 30px; }
+            .timeline-card { width: 100%; }
+            .tribute-sequence-2 { font-size: 2.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-main-title { font-size: 2.3rem; }
+            .hero-names { font-size: 1.8rem; }
+            .counter-container { grid-template-columns: 1fr; }
+            .letter-wrap { padding: 30px 20px; }
+        }
+
+        .pding{
+           
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HIGH PERFORMANCE CANVAS SYSTEM -->
+    <canvas id="particle-canvas"></canvas>
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-right"></div>
+
+    <!-- AUDIO FRAMEWORK -->
+    <audio id="cinematic-audio" loop preload="auto">
+        
+        <source src="cinematic-song.mp3">
+    </audio>
+
+    <!-- STAGE 1: THE CURTAIN (INTRO EPILOGUE) -->
+    <div id="intro-curtain">
+        <div class="intro-text-box">
+            <div class="intro-line-1">"Some Bonds Grow Stronger With Every Passing Year..."</div>
+            <div class="intro-line-2">Celebrating The Beautiful Journey Of Mama Ji & Mami Ji ❤️</div>
+            <button class="luxury-btn" onclick="initiateCinematicExperience()">Begin The Journey <br>[click me 😸]</button>
+        </div>
+    </div>
+
+    <!-- MAIN INTERACTIVE ARCHITECTURE -->
+    <div id="main-content">
+
+        <!-- HERO MAIN SUITE -->
+        <section class="hero" id="hero-trigger">
+            <div class="hero-glass-card">
+                <p class="hero-tag">A Grand Royal Celebration</p>
+                <h1 class="hero-main-title">HAPPY ANNIVERSARY</h1>
+                <div class="hero-names">Mama Ji ❤️ Mami Ji</div>
+                <p class="hero-quote">Together Through Love, Trust &amp; Countless Memories</p>
+            </div>
+        </section>
+
+        <!-- COUNTER MATRIX -->
+        <section>
+            <h2 class="cinematic-title">Precious Milestones</h2>
+            <p class="cinematic-sub">Every Moment Together Is A Precious Memory</p>
+            <div class="counter-container">
+                <div class="counter-box">
+                    <span class="counter-num" id="count-years">22</span>
+                    <span class="counter-label">Years of Pure Love</span>
+                </div>
+                <div class="counter-box">
+                    <span class="counter-num" id="count-months">0</span>
+                    <span class="counter-label">Months Elapsed</span>
+                </div>
+                <div class="counter-box">
+                    <span class="counter-num" id="count-days">0</span>
+                    <span class="counter-label">Days Shared</span>
+                </div>
+                <div class="counter-box">
+                    <span class="counter-num" id="count-hours">0</span>
+                    <span class="counter-label">Hours of Bliss</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE LOVE STORY TIMELINE -->
+        <section id="timeline-section">
+            <h2 class="cinematic-title">The Royal Timeline</h2>
+            <p class="cinematic-sub">Chapters of an Inspiring Journey</p>
+            <div class="timeline-container">
+                
+                <div class="timeline-item">
+                    <div class="timeline-pointer"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-icon">💍</div>
+                        <h3 class="timeline-title">The Beginning</h3>
+                        <p class="timeline-desc">Two beautiful souls united, committing to a lifetime of partnership, traditions, and dreams under golden blessings.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-pointer"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-icon">❤️</div>
+                        <h3 class="timeline-title">Beautiful Moments</h3>
+                        <p class="timeline-desc">Weaving everyday routines into extraordinary collections of joy, silent support, and shared laughter.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-pointer"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-icon">🏡</div>
+                        <h3 class="timeline-title">Building A Family</h3>
+                        <p class="timeline-desc">Creating a sanctuary of warmth, teaching values of resilience, and offering foundational shelter to generations.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-pointer"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-icon">🌟</div>
+                        <h3 class="timeline-title">Creating Memories</h3>
+                        <p class="timeline-desc">Traversing miles together, celebrating triumphs, standing strong during storms, and building an unbreakable empire of love.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-pointer"></div>
+                    <div class="timeline-card">
+                        <div class="timeline-icon">🎉</div>
+                        <h3 class="timeline-title">Another Wonderful Milestone</h3>
+                        <p class="timeline-desc">Standing proudly today, surrounded by a family that looks up to your devotion as our life's ultimate inspiration.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- THE CINEMATIC MEMORY GALLERY -->
+        <section>
+            <h2 class="cinematic-title">The Memory Gallery</h2>
+            <p class="cinematic-sub">Captured Timeless Portraits of Devotion</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-overlay"></div>
+                    <div class="pding">
+                        <div class="gallery-placeholder-art1"></div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay"></div>
+                    <div class="pding">
+                        <div class="gallery-placeholder-art2"></div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay"></div>
+                    <div class="pding">
+                        <div class="gallery-placeholder-art3"></div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay"></div>
+                    <div class="pding">
+                        <div class="gallery-placeholder-art4"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPECIAL LETTER SUITE -->
+        <section>
+            <div class="letter-wrap">
+                <h3 class="letter-salutation">Dear Mama Ji &amp; Mami Ji,</h3>
+                <div class="letter-body" id="typewriter-target"></div>
+                <div class="letter-signoff">With Eternal Love &amp; Respect,<br>Your Loving Family</div>
+            </div>
+        </section>
+
+        <!-- FAMILY WISHES SECTION -->
+        <section>
+            <h2 class="cinematic-title">Blessings From The Hearts</h2>
+            <p class="cinematic-sub">Family Sentiments Crafted With Love</p>
+            
+                <div class="wish-card">
+                    <p class="wish-text">"Happy anniversary bhaiya and bhabhi . <br>Aap dono aise hi khush raho aur ek dusre ka sath dete raho"</p>
+                    <div class="wish-author">
+                        <h4 class="wish-name">FROM</h4>
+                        <p class="wish-relation">USHA</p>
+                    </div>
+                </div>
+                
+            <div class="wishes-grid">
+                <div class="wish-card">
+                    <p class="wish-text">"Your relationship is the structural layout of what true commitment looks like. May your laughter echo through our lives forever!<br> Happy anniversary mama ji & mami ji "</p>
+                    <div class="wish-author">
+                        <h4 class="wish-name">FROM</h4>
+                        <p class="wish-relation"><!--Nephew &amp; Niece-->
+                            SHIVAM
+                        </p>
+                    </div>
+                </div>
+                <div class="wish-card">
+                    <p class="wish-text">"To the most beautiful anchors of our family ecosystem. Wishing you health, endless prosperity, and more years of glorious unity.<br><br> Happy anniversary mama ji & mami ji "</p>
+                    <div class="wish-author">
+                        <h4 class="wish-name">FROM</h4>
+                        <p class="wish-relation">SHIVANI</p>
+                    </div>
+                </div>
+                <div class="wish-card">
+                    <p class="wish-text">"Seeing you together makes everyone believe in everlasting destiny. Happy Anniversary to our wonderful Mama and Mami!<br><br> Happy anniversary both of you "</p>
+                    <div class="wish-author">
+                        <h4 class="wish-name">FORM</h4>
+                        <p class="wish-relation">AARADHYA</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CELEBRATION SURPRISE CONTROLLER -->
+        <section>
+            <div class="surprise-box">
+                <h2 class="cinematic-title" style="font-size: 2.2rem;">A Grand Surprise Awaits</h2>
+                <p style="color: #A0A0A0; margin-bottom: 2rem;">Click below to ignite our modern royal salute to your love story.</p>
+                <button class="luxury-btn" id="surprise-trigger" onclick="igniteCelebrationSurprise()">Open Special Surprise</button>
+                <div class="surprise-active-msg" id="surprise-msg">
+                    May Your Love Continue To Inspire Generations ❤️
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL TRIBUTE EPILOGUE -->
+        <section class="tribute-section" id="tribute-trigger">
+            <div class="tribute-sequence-1">Two Hearts. One Journey. Endless Love.</div>
+            <div class="tribute-sequence-2">Happy Anniversary Mama Ji &amp; Mami Ji ❤️</div>
+            <div class="tribute-sequence-3">"May Happiness, Prosperity, And Love Always Stay With You Throughout This Infinite Flight Of Life."</div>
+        </section>
+
+    </div>
+
+    <!-- --- INTERACTIVE BEHAVIOR ARCHITECTURE --- -->
+    <script>
+        /* --- TIMELINE COUNTER METRICS CONFIGURATION --- */
+        // Calculate counter metrics dynamically based on a landmark date framework
+        const ANNIVERSARY_YEAR = 2003; 
+        const ANNIVERSARY_MONTH = 06; // June (0-indexed base mapping)
+        const ANNIVERSARY_DAY = 22;
+
+        function updateLiveMetrics() {
+            const startDate = new Date(ANNIVERSARY_YEAR, ANNIVERSARY_MONTH, ANNIVERSARY_DAY);
+            const now = new Date();
+            const totalDiffMs = now - startDate;
+
+            let years = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth() - startDate.getMonth();
+            let days = now.getDate() - startDate.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const totalHours = Math.floor(totalDiffMs / (1000 * 60 * 60));
+
+            document.getElementById('count-years').innerText = years;
+            document.getElementById('count-months').innerText = months;
+            document.getElementById('count-days').innerText = days;
+            document.getElementById('count-hours').innerText = totalHours.toLocaleString();
+        }
+
+        /* --- IMMERSIVE CUSTOM PARTICLE SIMULATOR --- */
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+        let executionMode = 'ambient'; // options: ambient, celebration
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(x, y, size, speedX, speedY, color, type = 'gold') {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.speedX = speedX;
+                this.speedY = speedY;
+                this.color = color;
+                this.type = type;
+                this.alpha = 1;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.05;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+
+                if (this.type === 'heart') {
+                    ctx.fillStyle = '#FFD700';
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-this.size/2, -this.size/2, -this.size, this.size/3, 0, this.size);
+                    ctx.bezierCurveTo(this.size, this.size/3, this.size/2, -this.size/2, 0, 0);
+                    ctx.fill();
+                } else if (this.type === 'petal') {
+                    ctx.fillStyle = 'rgba(245, 215, 142, 0.7)';
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size * 1.5, this.size, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    // Standard Luxury Golden Particle Point
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+
+                if (executionMode === 'celebration') {
+                    this.alpha -= 0.006;
+                } else {
+                    // Delicate drifting kinetics
+                    if (this.y < 0) this.y = canvas.height;
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.x < 0) this.x = canvas.width;
+                }
+            }
+        }
+
+        function buildAmbientMatrix() {
+            particlesArray = [];
+            for (let i = 0; i < 90; i++) {
+                let size = Math.random() * 2.5 + 0.5;
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                let speedX = (Math.random() - 0.5) * 0.4;
+                let speedY = -(Math.random() * 0.6 + 0.1);
+                let color = Math.random() > 0.5 ? '#FFD700' : '#F5D78E';
+                let type = Math.random() > 0.85 ? 'petal' : 'gold';
+                particlesArray.push(new Particle(x, y, size, speedX, speedY, color, type));
+            }
+        }
+
+        function runParticleEngine() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                if (executionMode === 'celebration' && particlesArray[i].alpha <= 0) {
+                    particlesArray.splice(i, 1);
+                    i--;
+                }
+            }
+
+            if (executionMode === 'celebration' && particlesArray.length === 0) {
+                executionMode = 'ambient';
+                buildAmbientMatrix();
+            }
+            
+            requestAnimationFrame(runParticleEngine);
+        }
+
+        /* --- THE CINEMATIC INITIATION SYSTEM --- */
+        function initiateCinematicExperience() {
+            // Unlocking safe web audio context rules
+            const soundtrack = document.getElementById('cinematic-audio');
+            soundtrack.play().catch(err => console.log("Audio waiting for core interaction token layout."));
+
+            // Animate curtains away safely
+            const curtain = document.getElementById('intro-curtain');
+            curtain.style.opacity = '0';
+            setTimeout(() => {
+                curtain.style.visibility = 'hidden';
+                const mainArea = document.getElementById('main-content');
+                mainArea.style.opacity = '1';
+                document.getElementById('hero-trigger').classList.add('visible');
+                triggerLetterTypewriter();
+            }, 1500);
+        }
+
+        /* --- EMOTIONAL LETTER TYPEWRITER LOGIC --- */
+        const letterText = `Finding an ideal pairing is exceptional, but observing a relationship that constantly lifts an entire household through decades of selflessness is truly divine.
+
+Your combined footsteps have shaped the foundational definition of unwavering grace, silent patience, and deep integrity within this family. Through every obstacle, your partnership remained an unshakeable empire of protection and love.
+
+Thank you for setting the gold standard of what a beautiful family legacy looks like.`;
+
+        let typewriterExecuted = false;
+        function triggerLetterTypewriter() {
+            if (typewriterExecuted) return;
+            typewriterExecuted = true;
+            
+            let index = 0;
+            const target = document.getElementById('typewriter-target');
+            
+            function typeNextChar() {
+                if (index < letterText.length) {
+                    target.innerHTML += letterText.charAt(index);
+                    index++;
+                    setTimeout(typeNextChar, 25);
+                }
+            }
+            typeNextChar();
+        }
+
+        /* --- GRAND SURPRISE OVERLAY BURST --- */
+        function igniteCelebrationSurprise() {
+            executionMode = 'celebration';
+            particlesArray = [];
+
+            // Discharging fireworks, golden heart arrays and rich rose confetti bursts
+            const centerW = canvas.width / 2;
+            const centerH = canvas.height / 2;
+
+            for (let i = 0; i < 250; i++) {
+                let angle = Math.random() * Math.PI * 2;
+                let velocity = Math.random() * 8 + 2;
+                let speedX = Math.cos(angle) * velocity;
+                let speedY = Math.sin(angle) * velocity;
+                let size = Math.random() * 5 + 2;
+                
+                let randomSelector = Math.random();
+                let type = 'gold';
+                if (randomSelector > 0.75) type = 'heart';
+                else if (randomSelector > 0.45) type = 'petal';
+
+                particlesArray.push(new Particle(centerW, centerH, size, speedX, speedY, '#FFD700', type));
+            }
+
+            const promptMsg = document.getElementById('surprise-msg');
+            promptMsg.classList.add('show');
+        }
+
+        /* --- PERFORMANCE CONTEXT INTERSECTION VISIBILITY WATCHERS --- */
+        const scrollObserverOptions = {
+            threshold: 0.15
+        };
+
+        const uiObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, scrollObserverOptions);
+
+        // Tracking scroll milestones safely without heavy performance lag
+        document.querySelectorAll('.timeline-item').forEach(item => uiObserver.observe(item));
+        uiObserver.observe(document.getElementById('tribute-trigger'));
+
+        // Engine Loop Initialization
+        buildAmbientMatrix();
+        runParticleEngine();
+        updateLiveMetrics();
+        setInterval(updateLiveMetrics, 3600000); // Efficient hourly metrics sweep
+    </script>
+</body>
+</html>
